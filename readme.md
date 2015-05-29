@@ -53,6 +53,6 @@ Adding additional information is more difficult, as the only_five.py file is onl
 3. The function open_movies_page in only_five.py needs to be edited to accept the new information.
 4. The HTML and CSS in only_five.html needs to be edited so the information can be displayed on the page. 
 	
-VI. Credits
+## VI. Credits
 
 The only_five.py file was provided by Udacity as part of the Full Stack Web Developer nanodegree, originally under the file name fresh_tomatoes.py. It was minimally edited to more appropriately fit the theme. All other code was written by me, Patrick Hogan.
