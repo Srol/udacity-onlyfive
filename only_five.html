@@ -1,9 +1,4 @@
-import webbrowser
-import os
-import re
 
-# Styles and scripting for the page
-main_page_head = '''
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -84,10 +79,7 @@ main_page_head = '''
 			});
 		</script>
 	</head>
-'''
 
-# The main page layout and title bar
-main_page_content = '''
   <body>
     <!-- Trailer Video Modal -->
     <div class="modal" id="trailer">
@@ -113,50 +105,37 @@ main_page_content = '''
       </div>
     </div>
     <div class="container">
-      {movie_tiles}
+      
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="omOZyLmNMJs" data-toggle="modal" data-target="#trailer">
+    <img src="http://i.imgur.com/EULiNeP.jpg" width="220" height="342">
+    <h2>Highlander</h2>
+	<h4>Patrick Sez: I can't be 100 percent certain, but I think this is one of the films in the Highlander series.</h4>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="YsgJltP__UA" data-toggle="modal" data-target="#trailer">
+    <img src="http://i.imgur.com/WbS0V5E.jpg" width="220" height="342">
+    <h2>Highlander II: The Quickening</h2>
+	<h4>Patrick Sez: The Quickeningest film I've ever seen. It was over before I even knew it.</h4>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="eW_HzYMNOng" data-toggle="modal" data-target="#trailer">
+    <img src="http://i.imgur.com/oolFckA.jpg" width="220" height="342">
+    <h2>Highlander III: The Sorcerer</h2>
+	<h4>Patrick Sez: This movie is commonly referred to by its better-known title, "Sleepless in Seattle"</h4>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="6Xfx0RKvA5s" data-toggle="modal" data-target="#trailer">
+    <img src="http://i.imgur.com/u32XwEE.jpg" width="220" height="342">
+    <h2>Highlander: Endgame</h2>
+	<h4>Patrick Sez: At long last, the respected Highlander film franchise completes its journey with this, the final film in the series.</h4>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="RQJeTwNFSSc" data-toggle="modal" data-target="#trailer">
+    <img src="http://i.imgur.com/FOjpOO5.jpg" width="220" height="342">
+    <h2>Highlander: The Source</h2>
+	<h4>Patrick Sez: I'm pretty sure this isn't a real film. Do you remember it coming out? I don't.</h4>
+</div>
+
     </div>
   </body>
 </html>
-'''
-
-# A single movie entry html template
-movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
-    <img src="{poster_image_url}" width="220" height="342">
-    <h2>{movie_title}</h2>
-	<h4>Patrick Sez: {description}</h4>
-</div>
-'''
-
-def create_movie_tiles_content(movies):
-    # The HTML content for this section of the page
-    content = ''
-    for movie in movies:
-        # Extract the youtube ID from the url
-        youtube_id_match = re.search(r'(?<=v=)[^&#]+', movie.trailer_youtube_url)
-        youtube_id_match = youtube_id_match or re.search(r'(?<=be/)[^&#]+', movie.trailer_youtube_url)
-        trailer_youtube_id = youtube_id_match.group(0) if youtube_id_match else None
-
-        # Append the tile for the movie with its content filled in
-        content += movie_tile_content.format(
-            movie_title=movie.title,
-            poster_image_url=movie.poster_image_url,
-            trailer_youtube_id=trailer_youtube_id,
-			description=movie.description
-        )
-    return content
-
-def open_movies_page(movies):
-  # Create or overwrite the output file
-  output_file = open('only_five.html', 'w')
-
-  # Replace the placeholder for the movie tiles with the actual dynamically generated content
-  rendered_content = main_page_content.format(movie_tiles=create_movie_tiles_content(movies))
-
-  # Output the file
-  output_file.write(main_page_head + rendered_content)
-  output_file.close()
-
-  # open the output file in the browser
-  url = os.path.abspath(output_file.name)
-  webbrowser.open('file://' + url, new=2) # open in a new tab, if possible
